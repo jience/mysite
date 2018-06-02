@@ -12,12 +12,7 @@
             <span>{{ article.author.username }}</span>
             <span style="margin-left: 20px">{{ publish }}</span>
         </p>
-        <div>{{ article.body }}</div>
-    </div>
-    <div class="col-xs-6 col-md-4">
-    <h2>广告</h2>
-    <p>跟老齐学: www.itdiffer.com</p>
-    <img width="200px" src="http://pic.ikafan.com/imgp/L3Byb3h5L2h0dHAvdXNlcmltYWdlOC4zNjBkb2MuY29tLzE2LzA3MDUvMTUvMTU2NjQ5XzIwMTYwNzA1MTUxMzMzMDAyNjM5NDkyNy5wbmc=.jpg">
+        <div class="text-center">{{ article.body }}</div>
     </div>
 </div>
 {% endblock %}
