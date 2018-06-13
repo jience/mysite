@@ -1,10 +1,8 @@
-from django.urls import path
+from django.conf.urls import url
 from . import views
 
 
 urlpatterns = [
-    path(r'', views.blog_title, name="blog_title"),
-    path(r'<article_id>', views.blog_article, name="blog_article")
+    url(r'^$', views.blog_title, name="blog_title"),
+    url(r'(?P<article_id>\d+)/$', views.blog_article, name="blog_article")
 ]
-
-app_name = 'blog'  # django 2.0 的include中需要定义app_name

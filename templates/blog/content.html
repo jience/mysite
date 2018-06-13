@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% block title %}blog article{% endblock %}
 
 {% block content%}
@@ -13,6 +15,11 @@
             <span style="margin-left: 20px">{{ publish }}</span>
         </p>
         <div class="text-center">{{ article.body }}</div>
+    </div>
+    <div class="col-md-6 col-md-4">
+        <h2>广告</h2>
+        <p>跟老齐学：www.itdidder.com</p>
+        <img width="200px" src="{% static 'images/Dog.jpg' %}">
     </div>
 </div>
 {% endblock %}

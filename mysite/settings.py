@@ -128,3 +128,15 @@ STATICFILES_DIRS = (
 )
 
 LOGIN_REDIRECT_URL = '/blog/'
+
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '460568740@qq.com'
+EMAIL_HOST_PASSWORD = 'oydjmiyyjshhbgbb'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "137066162@qq.com"
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# from django.core.mail import send_mail
+# send_mail('Subject here', 'Here is the message.', '460568740@qq.com', ['137066162@qq.com'], fail_silently=False)
