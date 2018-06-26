@@ -46,7 +46,15 @@
             <a href="{% url 'account:edit_my_information' %}"><button class="btn btn-primary btn-lg">edit my information</button></a>
         </div>
         <div class="col-md-6">
-            <p>picture</p>
+            {% load staticfiles %}
+            <div style="margin-right: 100px">
+                {% if userinfo.photo %}
+                <img src="{{ userinfo.photo | striptags }}" class="img-circle" id="my_photo" name="user_face">
+                {% else %}
+                <img name="user_face" src="{% static 'images/newton.jpg' %}" class="img-circle" width="270px" id="my_photo">
+                {% endif %}
+            </div>
+            <div style="margin-right: 100px"><button class="btn btn-primary btn-lg" id="upload_image" onclick="upload_image_layer()">upload my photo</button></div>
         </div>
     </div>
 </div>

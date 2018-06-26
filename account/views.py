@@ -64,7 +64,6 @@ def myself_edit(request):
     userprofile = UserProfile.objects.get(user=request.user)
     userinfo = UserInfo.objects.get(user=request.user)
 
-
     if request.method == "POST":
         user_form = UserForm(request.POST)
         userprofile_form = UserProfileForm(request.POST)
@@ -94,3 +93,15 @@ def myself_edit(request):
                                               "aboutme": userinfo.aboutme})
         return render(request, "account/myself_edit.html", {"user_form": user_form, "userprofile_form": userprofile_form,
                                                             "userinfo_form": userinfo_form})
+
+
+@login_required(login_url='/account/login/')
+def my_image(request):
+    if request.method == 'POST':
+        img = request.POST['img']
+        userinfo = UserInfo.objects.get(user=request.user.id)
+        userinfo.photo = img
+        userinfo.save()
+        return HttpResponse("1")
+    else:
+        return render(request, 'account/imagecrop.html',)
