@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}articles{% endblock %}
+
+{% block content %}
+    <div class="row text-center vertical-middle-sm">
+        <h1>阅读，丰富头脑，善化行为</h1>
+    </div>
+    <div class="container">
+    {% for article in articles %}
+        <div class="list-group">
+            <a href="{{ article.get_url_path }}" class="list-group-item active active">
+                <h4 class="list-group-item-heading">{{ article.title }}</h4>
+                <p class="list-group-item-text">作者: {{ article.author.username }}</p>
+{#                slice: 根据字符数来截取部分内容，空格也算；truncatewords: 截取一定数量的单词，在英文中words#}
+{#                之间用空格分割，所以它会按照空格截取，遇到中文就比较麻烦；#}
+{#                linebreaks: 允许原文中的换行HTML标记符继续产生效用。#}
+                <p class="list-group-item-text">概要: {{ article.body | slice:'70' | linebreaks }}</p>
+            </a>
+        </div>
+    {% endfor %}
+    {% include "paginator.html" %}
+    </div>
+{% endblock %}
