@@ -9,9 +9,13 @@
     <div class="container">
     {% for article in articles %}
         <div class="list-group">
-            <a href="{{ article.get_url_path }}" class="list-group-item active active">
+            <a href="{{ article.get_url_path }}" class="list-group-item active">
                 <h4 class="list-group-item-heading">{{ article.title }}</h4>
-                <p class="list-group-item-text">作者: {{ article.author.username }}</p>
+                <p class="list-group-item-text">作者:
+                    <a href="{% url 'article:author_articles' article.author.username %}">
+                    {{ article.author.username }}
+                    </a>
+                </p>
 {#                slice: 根据字符数来截取部分内容，空格也算；truncatewords: 截取一定数量的单词，在英文中words#}
 {#                之间用空格分割，所以它会按照空格截取，遇到中文就比较麻烦；#}
 {#                linebreaks: 允许原文中的换行HTML标记符继续产生效用。#}
