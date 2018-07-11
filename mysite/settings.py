@@ -141,3 +141,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # from django.core.mail import send_mail
 # send_mail('Subject here', 'Here is the message.', '460568740@qq.com', ['137066162@qq.com'], fail_silently=False)
+
+# Redis Config
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
