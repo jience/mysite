@@ -4,8 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from article.models import ArticleColumn, ArticlePost
-from article.forms import ArticleColumnForm, ArticlePostForm
+from article.models import ArticleColumn, ArticlePost, ArticleTag
+from article.forms import ArticleColumnForm, ArticlePostForm, ArticleTagForm
 
 
 # Create your views here.
@@ -122,7 +122,7 @@ def redit_article(request, article_id):
     if request.method == "GET":
         article_columns = request.user.article_column.all()
         article = ArticlePost.objects.get(id=article_id)
-        this_article_form = ArticlePostForm(initial={"title":article.title})
+        this_article_form = ArticlePostForm(initial={"title": article.title})
         this_article_column = article.column
         return render(request, "article/column/redit_article.html", {"article": article,
                                                                      "article_columns": article_columns,
@@ -138,3 +138,39 @@ def redit_article(request, article_id):
             return HttpResponse("1")
         except:
             return HttpResponse("2")
+
+
+@login_required(login_url='/account/login')
+@csrf_exempt
+def article_tag(request):
+    if request.method == "GET":
+        article_tags = ArticleTag.objects.filter(author=request.user)
+        article_tag_form = ArticleTagForm()
+        return render(request, "article/tag/tag_list.html", {"article_tags": article_tags,
+                                                             "article_tag_form": article_tag_form})
+
+    if request.method == "POST":
+        tag_post_form = ArticleTagForm(data=request.POST)
+        if tag_post_form.is_valid():
+            try:
+                new_tag = tag_post_form.save(commit=False)
+                new_tag.author = request.user
+                new_tag.save()
+                return HttpResponse("1")
+            except:
+                return HttpResponse("the data cannot be save.")
+        else:
+            return HttpResponse("sorry, thr form is not valid.")
+
+
+@login_required(login_url='/account/login')
+@require_POST
+@csrf_exempt
+def del_article_tag(request):
+    tag_id = request.POST['tag_id']
+    try:
+        tag = ArticleTag.objects.get(id=tag_id)
+        tag.delete()
+        return HttpResponse("1")
+    except:
+        return HttpResponse("2")
