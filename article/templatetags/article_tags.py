@@ -1,5 +1,7 @@
 from django import template
 from django.db.models import Count
+from django.utils.safestring import mark_safe
+import markdown
 
 register = template.Library()
 
@@ -25,3 +27,8 @@ def latest_articles(n=5):
 @register.assignment_tag
 def most_commented_articles(n=3):
     return ArticlePost.objects.annotate(total_comments=Count("comments")).order_by("-total_comments")[:n]
+
+
+@register.filter(name='markdown')
+def markdown_filter(text):
+    return mark_safe(markdown.markdown(text))
