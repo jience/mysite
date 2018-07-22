@@ -11,3 +11,18 @@ class CourseListView(ListView):
     def get_queryset(self):
         qs = super(CourseListView, self).get_queryset()
         return qs.filter(user=User.objects.filter(username='alex'))
+
+
+class UserMixin:
+    def get_queryset(self):
+        qs = super(UserMixin, self).get_queryset()
+        return qs.filter(user=self.request.user)
+
+
+class UserCourseMixin(UserMixin):
+    model = Course
+
+
+class ManageCourseListView(UserCourseMixin, ListView):
+    context_object_name = "courses"
+    template_name = 'course/manage/manage_course_list.html'
