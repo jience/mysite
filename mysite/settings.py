@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'account',
     'article',
     'image',
+    'course',
     'sorl.thumbnail',
 ]
 

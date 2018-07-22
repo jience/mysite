@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^account/', include('account.urls', namespace='account', app_name='account')),
     url(r'^article/', include('article.urls', namespace='article', app_name='article')),
     url(r'^image/', include('image.urls', namespace='image', app_name='image')),
+    url(r'^course/', include('course.urls', namespace='course', app_name='course')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
