@@ -19,9 +19,9 @@
     	    <td>{{ course.created|date:"Y-m-d" }}</td>
     	    <td>
     	        <a name="edit" href="#"><span class="glyphicon glyphicon-pencil"></span></a>
-{#                <a name="delete" href="{% url 'course:delete_course' course.id %}" >#}
-{#                    <span class="glyphicon glyphicon-trash" style="margin-left:20px;"></span>#}
-{#                </a>#}
+                <a name="delete" href="{% url 'course:delete_course' course.id %}" >
+                    <span class="glyphicon glyphicon-trash" style="margin-left:20px;"></span>
+                </a>
             </td>
     	</tr>
     	{% endfor %}

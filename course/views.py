@@ -1,4 +1,5 @@
-from django.views.generic import TemplateView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, DeleteView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
@@ -50,3 +51,8 @@ class CreateCourseView(UserCourseMixin, CreateView):
             new_course.save()
             return redirect("course:manage_course")
         return self.render_to_response({"form": form})
+
+
+class DeleteCourseView(UserCourseMixin, DeleteView):
+    template_name = 'course/manage/delete_course_confirm.html'
+    success_url = reverse_lazy("course:manage_course")
