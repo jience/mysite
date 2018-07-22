@@ -1,5 +1,5 @@
 {% extends "article/base.html" %}
-
+{% load thumbnail %}
 {% load staticfiles %}
 
 {% block title %}images{% endblock %}
@@ -19,7 +19,10 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ image.title }}</td>
-                        <td>{{ image.image }}</td>
+{#                        <td><img src="{{ image.image.url }}" width="100px" height="100px"></td>#}
+                        {% thumbnail image.image "100x100" as im %}
+                            <td><img src="{{ im.url }}"></td>
+                        {% endthumbnail %}
                         <td>
                             <a name="delete" href="javascript:" onclick="del_image(this, {{ image.id }})">
                                 <span class="glyphicon glyphicon-trash" style="margin-left: 20px;"></span>
@@ -70,8 +73,32 @@
             });
         }
 
-        function del_image() {
-
+        function del_image(the, image_id) {
+            var image_title = $(the).parents("tr").children("td").eq(1).text();
+            layer.open({
+                type: 1,
+                skin: "layui-layer-rim",
+                area: ["400px", "200px"],
+                title: "删除图片",
+                content: '<div class="text-center" style="margin-top: 20px"><p>是否确定删除《' + image_title + '》</p></div>',
+                btn: ['确定', '取消'],
+                yes: function () {
+                    $.ajax({
+                        url: '{% url "image:del_image" %}',
+                        type: "POST",
+                        data: {"image_id": image_id},
+                        success: function (e) {
+                            var status = e['status'];
+                            if (status === "1") {
+                                parent.location.reload();
+                                layer.msg("has been deleted.", {icon: 1});
+                            } else {
+                                layer.msg("删除失败", {icon: 2});
+                            }
+                        },
+                    })
+                },
+            });
         }
     </script>
 {% endblock %}
