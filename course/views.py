@@ -1,3 +1,5 @@
+import json
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DeleteView
 from django.views.generic.edit import CreateView
@@ -56,3 +58,11 @@ class CreateCourseView(UserCourseMixin, CreateView):
 class DeleteCourseView(UserCourseMixin, DeleteView):
     template_name = 'course/manage/delete_course_confirm.html'
     success_url = reverse_lazy("course:manage_course")
+
+    def dispatch(self, *args, **kwargs):
+        resp = super(DeleteCourseView, self).dispatch(*args, **kwargs)
+        if self.request.is_ajax():
+            response_data = {"result": "ok"}
+            return HttpResponse(json.dumps(response_data), content_type="applicaton/json")
+        else:
+            return resp
