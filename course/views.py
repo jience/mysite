@@ -86,7 +86,7 @@ class CreateLessonView(LoginRequiredMixin, View):
             return redirect("course:manage_course")
 
 
-class ListLessonView(LoginRequiredMixin, TemplateResponseMixin, View):
+class ListLessonsView(LoginRequiredMixin, TemplateResponseMixin, View):
     login_url = "/account/login/"
     template_name = 'course/manage/list_lessons.html'
 
@@ -103,3 +103,11 @@ class DetailLessonView(LoginRequiredMixin, TemplateResponseMixin, View):
         lesson = get_object_or_404(Lesson, id=lesson_id)
         return self.render_to_response({'lesson': lesson})
 
+
+class StudentListLessonView(ListLessonsView):
+    template_name = "course/slist_lessons.html"
+
+    def post(self, request, *args, **kwargs):
+        course = Course.objects.get(id=kwargs['course_id'])
+        course.student.add(self.request.user)
+        return HttpResponse("ok")
